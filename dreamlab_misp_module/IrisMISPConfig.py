@@ -20,7 +20,7 @@
 module_name = "dreamlab_misp_module"
 module_description = "Provides an interface between MISP and IRIS"
 interface_version = "1.2.0"
-module_version = "1.4.0"
+module_version = "1.5.0"
 pipeline_support = False
 pipeline_info = {}
 
