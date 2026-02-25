@@ -105,6 +105,44 @@ class MispHandler:
 
         return IrisInterfaceStatus.I2Success(data=rendered)
 
+    @staticmethod
+    def _parse_ioc_tags(ioc_tags):
+        """
+        Normalize IRIS IOC tags field to a list of unique tag names while preserving order.
+        """
+        if not ioc_tags:
+            return []
+
+        if isinstance(ioc_tags, str):
+            raw_tags = ioc_tags.split(',')
+        elif isinstance(ioc_tags, list):
+            raw_tags = ioc_tags
+        else:
+            raw_tags = [str(ioc_tags)]
+
+        tags = []
+        seen = set()
+        for tag in raw_tags:
+            clean_tag = str(tag).strip()
+            if not clean_tag or clean_tag in seen:
+                continue
+            seen.add(clean_tag)
+            tags.append(clean_tag)
+
+        return tags
+
+    @staticmethod
+    def _set_hit_tag(ioc, has_hit: bool):
+        tags = MispHandler._parse_ioc_tags(getattr(ioc, 'ioc_tags', None))
+
+        if has_hit:
+            if 'misp:hit' not in tags:
+                tags.append('misp:hit')
+        else:
+            tags = [tag for tag in tags if tag != 'misp:hit']
+
+        ioc.ioc_tags = ','.join(tags)
+
     def _handle_misp_report(self, ioc, report, html_report_template):
         """
         Handle the MISP report response, adds the report as attribute and attaches a tag on hit
@@ -134,11 +172,7 @@ class MispHandler:
 
         # Check if we have any hits, and add/remove tag
         hits = [r for r in report if r.get('result')]
-        if len(hits) > 0:
-            if "misp:hit" not in ioc.ioc_tags:
-                ioc.ioc_tags = f"{ioc.ioc_tags},misp:hit"
-        else:
-            ioc.ioc_tags = ioc.ioc_tags.replace("misp:hit", "")
+        self._set_hit_tag(ioc, has_hit=len(hits) > 0)
 
         return InterfaceStatus.I2Success("Successfully processed IOC")
 
