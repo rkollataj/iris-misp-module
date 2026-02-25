@@ -96,7 +96,7 @@ class TestMispHandler(TestCase):
         misp = self.misp_handler.load_misp_instance()
 
         self.assertEqual("public", misp.get("type"))
-        self.assertEqual("<class 'iris_misp_module.misp_handler.mispclient.MISPClient'>", repr(type(misp.get("misp"))))
+        self.assertEqual("<class 'dreamlab_misp_module.misp_handler.mispclient.MISPClient'>", repr(type(misp.get("misp"))))
 
     def test_handle_misp_domain(self):
         class Ioc:

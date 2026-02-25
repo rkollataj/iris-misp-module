@@ -20,8 +20,8 @@
 import iris_interface.IrisInterfaceStatus as InterfaceStatus
 from iris_interface.IrisModuleInterface import IrisModuleInterface, IrisModuleTypes
 
-import iris_misp_module.IrisMISPConfig as interface_conf
-from iris_misp_module.misp_handler.misp_handler import MispHandler
+import dreamlab_misp_module.IrisMISPConfig as interface_conf
+from dreamlab_misp_module.misp_handler.misp_handler import MispHandler
 
 
 class IrisMISPInterface(IrisModuleInterface):

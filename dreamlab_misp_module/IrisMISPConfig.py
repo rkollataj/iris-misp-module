@@ -17,7 +17,7 @@
 #  along with this program; if not, write to the Free Software Foundation,
 #  Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-module_name = "IrisMISP"
+module_name = "dreamlab_misp_module"
 module_description = "Provides an interface between MISP and IRIS"
 interface_version = "1.2.0"
 module_version = "1.4.0"

@@ -25,7 +25,7 @@ from app.datamgmt.manage.manage_attribute_db import add_tab_attribute_field
 from iris_interface import IrisInterfaceStatus
 from jinja2 import Template
 
-from iris_misp_module.misp_handler.mispclient import MISPClient, MISPClientError
+from dreamlab_misp_module.misp_handler.mispclient import MISPClient, MISPClientError
 
 
 class MispHandler:

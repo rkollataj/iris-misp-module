@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(
-    name='iris_misp_module',
+    name='dreamlab_misp_module',
     version='1.4.0',
-    packages=['iris_misp_module', 'iris_misp_module.misp_handler'],
+    packages=['dreamlab_misp_module', 'dreamlab_misp_module.misp_handler'],
     url='https://github.com/dfir-iris/iris-misp-module',
     license='LGPLv3.0',
     author='ekt0, DFIR-IRIS',
