@@ -132,14 +132,14 @@ class MispHandler:
         return tags
 
     @staticmethod
-    def _set_hit_tag(ioc, has_hit: bool):
+    def _set_search_tag(ioc, event_count: int):
         tags = MispHandler._parse_ioc_tags(getattr(ioc, 'ioc_tags', None))
+        search_tag_prefix = 'MISP:Search="'
+        search_tag = f'MISP:Search="{event_count} events"'
 
-        if has_hit:
-            if 'misp:hit' not in tags:
-                tags.append('misp:hit')
-        else:
-            tags = [tag for tag in tags if tag != 'misp:hit']
+        # Remove legacy hit tag and previous MISP search count tags before setting the new one.
+        tags = [tag for tag in tags if tag != 'misp:hit' and not tag.startswith(search_tag_prefix)]
+        tags.append(search_tag)
 
         ioc.ioc_tags = ','.join(tags)
 
@@ -170,9 +170,13 @@ class MispHandler:
         else:
             self.log.info('Skipped adding attribute report. Option disabled')
 
-        # Check if we have any hits, and add/remove tag
-        hits = [r for r in report if r.get('result')]
-        self._set_hit_tag(ioc, has_hit=len(hits) > 0)
+        # Always annotate the IOC with the total number of MISP events returned.
+        event_count = 0
+        for result_entry in report or []:
+            result_events = result_entry.get('result')
+            if isinstance(result_events, list):
+                event_count += len(result_events)
+        self._set_search_tag(ioc, event_count=event_count)
 
         return InterfaceStatus.I2Success("Successfully processed IOC")
 
