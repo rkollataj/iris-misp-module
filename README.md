@@ -2,7 +2,7 @@
 
 An interface module for MISP and Iris to automatically enrich IOCs with MISP insight.  
 **Module type** : ``Processor``  
-**Min IRIS version required** : ``> 1.4.0`` 
+**Min IRIS version required** : ``> 1.0.0`` 
 
 The module is preinstalled and registered by default on IRIS. For a manual installation please see the Installation section of this readme.
 
@@ -18,4 +18,3 @@ either from sources or existing packages (go to step 3.)
 3. Copy the wheel into the IRIS app docker container ``docker cp dreamlab_misp_module-XX-py3-none-any.whl container:/iriswebapp/dependencies/``
 4. Get an interactive shell on the docker : ``docker exec -it container /bin/sh``
 5. Install the new package ``pip3 install dependencies/dreamlab_misp_module-XX-py3-none-any.whl``
-
